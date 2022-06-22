@@ -108,7 +108,64 @@ Pass the `-config.expand-env` flag at the command line to enable this way of set
 [ballast_bytes: <int> | default = 0]
 
 # Configures the server of the launched module(s).
-[server: <server>]
+[server:
+  # HTTP server listen host
+  # CLI flag: -server.http-listen-address
+  [http_listen_address: <string>]
+
+  # HTTP server listen port
+  # CLI flag: -server.http-listen-port
+  [http_listen_port: <int> | default = 80]
+
+  # gRPC server listen host
+  # CLI flag: -server.grpc-listen-address
+  [grpc_listen_address: <string>]
+
+  # gRPC server listen port
+  # CLI flag: -server.grpc-listen-port
+  [grpc_listen_port: <int> | default = 9095]
+
+  # Register instrumentation handlers (/metrics, etc.)
+  # CLI flag: -server.register-instrumentation
+  [register_instrumentation: <boolean> | default = true]
+
+  # Timeout for graceful shutdowns
+  # CLI flag: -server.graceful-shutdown-timeout
+  [graceful_shutdown_timeout: <duration> | default = 30s]
+
+  # Read timeout for HTTP server
+  # CLI flag: -server.http-read-timeout
+  [http_server_read_timeout: <duration> | default = 30s]
+
+  # Write timeout for HTTP server
+  # CLI flag: -server.http-write-timeout
+  [http_server_write_timeout: <duration> | default = 30s]
+
+  # Idle timeout for HTTP server
+  # CLI flag: -server.http-idle-timeout
+  [http_server_idle_timeout: <duration> | default = 120s]
+
+  # Max gRPC message size that can be received
+  # CLI flag: -server.grpc-max-recv-msg-size-bytes
+  [grpc_server_max_recv_msg_size: <int> | default = 4194304]
+
+  # Max gRPC message size that can be sent
+  # CLI flag: -server.grpc-max-send-msg-size-bytes
+  [grpc_server_max_send_msg_size: <int> | default = 4194304]
+
+  # Limit on the number of concurrent streams for gRPC calls (0 = unlimited)
+  # CLI flag: -server.grpc-max-concurrent-streams
+  [grpc_server_max_concurrent_streams: <int> | default = 100]
+
+  # Log only messages with the given severity or above. Supported values [debug,
+  # info, warn, error]
+  # CLI flag: -log.level
+  [log_level: <string> | default = "info"]
+
+  # Base path to serve all API routes from (e.g., /v1/).
+  # CLI flag: -server.path-prefix
+  [http_path_prefix: <string> | default = ""]
+]
 
 # Configures the distributor.
 [distributor: <distributor>]
@@ -182,68 +239,7 @@ Pass the `-config.expand-env` flag at the command line to enable this way of set
 [analytics: <analytics>]
 ```
 
-## server
-
-The `server` block
-configures the HTTP and gRPC server communication of the launched service(s).
-
 ```yaml
-# HTTP server listen host
-# CLI flag: -server.http-listen-address
-[http_listen_address: <string>]
-
-# HTTP server listen port
-# CLI flag: -server.http-listen-port
-[http_listen_port: <int> | default = 80]
-
-# gRPC server listen host
-# CLI flag: -server.grpc-listen-address
-[grpc_listen_address: <string>]
-
-# gRPC server listen port
-# CLI flag: -server.grpc-listen-port
-[grpc_listen_port: <int> | default = 9095]
-
-# Register instrumentation handlers (/metrics, etc.)
-# CLI flag: -server.register-instrumentation
-[register_instrumentation: <boolean> | default = true]
-
-# Timeout for graceful shutdowns
-# CLI flag: -server.graceful-shutdown-timeout
-[graceful_shutdown_timeout: <duration> | default = 30s]
-
-# Read timeout for HTTP server
-# CLI flag: -server.http-read-timeout
-[http_server_read_timeout: <duration> | default = 30s]
-
-# Write timeout for HTTP server
-# CLI flag: -server.http-write-timeout
-[http_server_write_timeout: <duration> | default = 30s]
-
-# Idle timeout for HTTP server
-# CLI flag: -server.http-idle-timeout
-[http_server_idle_timeout: <duration> | default = 120s]
-
-# Max gRPC message size that can be received
-# CLI flag: -server.grpc-max-recv-msg-size-bytes
-[grpc_server_max_recv_msg_size: <int> | default = 4194304]
-
-# Max gRPC message size that can be sent
-# CLI flag: -server.grpc-max-send-msg-size-bytes
-[grpc_server_max_send_msg_size: <int> | default = 4194304]
-
-# Limit on the number of concurrent streams for gRPC calls (0 = unlimited)
-# CLI flag: -server.grpc-max-concurrent-streams
-[grpc_server_max_concurrent_streams: <int> | default = 100]
-
-# Log only messages with the given severity or above. Supported values [debug,
-# info, warn, error]
-# CLI flag: -log.level
-[log_level: <string> | default = "info"]
-
-# Base path to serve all API routes from (e.g., /v1/).
-# CLI flag: -server.path-prefix
-[http_path_prefix: <string> | default = ""]
 ```
 
 ## distributor
